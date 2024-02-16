@@ -99,6 +99,7 @@ class QAgent(AgentBase):
 
 
 def train(env, agent: AgentBase, max_episodes: int):
+  avg_reward = 0
   for i in range(max_episodes):
     t = 0
     total_reward = 0
@@ -115,9 +116,13 @@ def train(env, agent: AgentBase, max_episodes: int):
         #     f'Agent-{agent.name} Episode-{i}: finished after {t} timesteps, total reward: {total_reward}'
         # )
         state, _ = env.reset()
+        avg_reward += total_reward
         t = 0
         total_reward = 0
         break
+
+  avg_reward /= max_episodes
+  print(f'Agent-{agent.name} average train reward: {avg_reward}')
 
 
 def print_optimal_path(env, agent: AgentBase):
